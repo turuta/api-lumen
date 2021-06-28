@@ -50,6 +50,19 @@ class SeriesController
         $serie->fill($request->all());
         $serie->save();
 
-        return response()->json($serie);
+        return $serie;
+    }
+
+    public function destroy(int $id)
+    {
+        $qtdRecursosRemovidos = Serie::destroy($id);
+
+        if ($qtdRecursosRemovidos === 0) {
+            return response()->json([
+                'erro' => 'Recurso não encontrado.'
+            ], 404);
+        }
+
+        return response()->json([], 204);
     }
 }
